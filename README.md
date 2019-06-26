@@ -24,8 +24,34 @@ Continuous Deployment
 4. Future aspirations (alias the **dream**)
 
 ### Test-Driven-Development
-**TODO**
-- Test Coverage
+As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code which is written. Therefore we encourage everyone to develop test-first for this project. The procedure should be as follows:
+
+1. write unit-tests which test for the desired behaviour of the method
+2. write actual code
+3. run tests on code
+4. repeat steps 2 & 3 until tests run successful
+
+Tests are the tool which give us the confidence to merge into `master`, which is especially true when the code-base has a high test coverage. Later in [chapter **TODO**]() we will present some tools and libraries which determine the test coverage. Of course writing tests will not catch all errors and problems which might come up, but they are a reliable, fast and automated way to ensure correct behaviour for (the majority of) our code. Tests also scale up elegantly from low-level modules to high-level ones.
+
+The philosophies when writing tests should be:
+
+- **test only one 'thing' per test**:  
+    Each test should only test for one scenario or thing; for example, one test could cover what happens when `NULL` is passed as a parameter, while another one tests what happens when `INT_MAX` is passed. This will help during debugging as depending on the failing test it is easier to find the section in the code which does not work properly. E.g., If test `test_paramIsNull_returnZero()` fails you would know that the method is not returning 0 when `NULL` is passed as a parameter. This simply would not be possible when tests are multipurpose and cover all kind of scenarios.
+- **cover the different scenarios aka have high test coverage**:  
+    Testing for different kinds of scenarios ensures that your current implementation will run correctly, but it also ensures that future ones will. This alone should be enough motivation to write tests. Imagine switching out a dependency because it is deprecated but then the program keeps crashing. With existing tests it will much easier to make out what is going wrong with the new library which you are using.
+- **tests should execute quickly**:  
+    This has two primary reason, the first one being more important than the second one:
+    
+    1)  To get timely feedback: If you made a change to a block of code, you do not want to wait 5 minutes each time to see whether your tests run successful. This will in the long run discourage developers to run (and maybe even write) tests, which obviously is not desirable.
+    2)  Most CI-pipelines have limited run-time per build (usually around 10-20 minutes). If your tests take too much time to execute the CI pipeline will just time out and you will not get any results.
+    
+    As a hint, it is important to understand that if a code block runs with outer dependencies, it is often enough to just mock or stub these. If you wanna read up on mocking and stubbing, refer to [this wonderful article by Martin Fowler](https://www.martinfowler.com/articles/mocksArentStubs.html) or the more compact answers in [this stackoverflow article](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub?page=1&tab=votes#tab-top).
+
+So far we have only talked about unit-test, but there is also something called _integrated tests_. Unit tests for the most part are trivial to write, so there literally are no excuses to not write them. Integrated tests are a different beast though as they intend to test parts of the system in conjunction which presents its own set of difficulties. 
+
+_We are working to extend this part of the documentation, so please be patient for the update on integrated testing :)_  
+
+**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with it's own merits and downsides, but maybe it is worth a look for some people :)
 
 ### Software Versioning and Commit Standards
 **TODO**
@@ -54,17 +80,19 @@ We would like to encourage certain coding principles for this project in order t
     
     Let's consider this very crude example in python:
     
-    ```python
+    ```
     # variable to store population size
     a = get_population_size() 
     ```
     
     or even worse
     
-    ```python
+    ```
     # variable to store population size
     population_size = get_population_size() 
     ```
+    
+    **TODO**
     
     Therefore, the more you code with this and the principles of 1) in mind, the more you will see that many comments are just totally unnecessary and only clutter the code.
         
@@ -72,7 +100,7 @@ We would like to encourage certain coding principles for this project in order t
     - When it is necessary to explain a particularity or a choice for a block of code
     - Documentation for API's which are not project intern
 3. Encapsulation and Side-Effects  
-    Wrapping external modules
+    Wrapping external modules (library tests)
 
 - Code-Styling in the next chapter
 - JetBrains IDEs
