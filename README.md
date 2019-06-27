@@ -66,11 +66,13 @@ Now depending on the kind of software, versioning should be handled differently.
     MINOR version when you add functionality in a backwards-compatible manner,    and  
     PATCH version when you make backwards-compatible bug fixes.
 
-    Obviously this only applies once you release a stable build, aka `version 1.0.0.` As long as you linger in versions 0.x.y you do not issue a `MAJOR`-version bump.
+    All other changes, like on the documentation or tests would not cause a version bump as they do not directly affect production code.
+    
+    Obviously use SemVer only after you release a stable build, aka `version 1.0.0`. As long as you linger in versions `0.x.y` you do not need to issue a `MAJOR`-version bump.
     
     This versioning convention will cause a lot of version bumps, but this is intended behaviour. We want to give the users the transparency of our development, as well as the choice of versions compatible with their systems.
 
-    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number, generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter **TODO**]() on language specific tools).
+    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter **TODO**]() on language specific tools).
     
     <sub>**Side note:** For more explanation on the idea of SemVer and `semantic-release`, we recommend watching the talk [_Kill all humans_](https://www.youtube.com/watch?v=ZXyx_1kN1L8) by one of the engineers of `semantic-release` or reading through the official [documentation](https://semantic-release.gitbook.io/semantic-release/).</sub>
     
