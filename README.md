@@ -51,13 +51,39 @@ So far we have only talked about unit-test, but there is also something called _
 
 _We are working to extend this part of the documentation, so please be patient for the update on integrated testing :)_  
 
-**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with it's own merits and downsides, but maybe it is worth a look for some people :)
+<sub>**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with it's own merits and downsides, but maybe it is worth a look for some people :)</sub>
 
 ### Software Versioning and Commit Standards
-**TODO**
-- SemVer (include semantic release & 'kill all humans')
-- Angular Commit Standard
-- Commitizen & JetBrains-IDE plugin Git-Commit-Template
+Software Versioning is a delicate topic for many software engineers. In the same way it should be handled for this project, as we intend to have a transparent versioning scheme for the end-users.  
+Now depending on the kind of software, versioning should be handled differently. We will list a few types of software and our preferred versioning scheme. We aim to extend to this list, so if you have suggestions, let us now.
+
+- **Public APIs and Packages**:  
+    For public APIs and Packages we would like to encourage use of [SemVer](https://semver.org/), which is an abbreviation for _semantic versioning_. To quote the official [documentation](https://semver.org/):
+
+    > Given a version number MAJOR.MINOR.PATCH, increment the:
+    >
+    > MAJOR version when you make incompatible API changes,  
+    MINOR version when you add functionality in a backwards-compatible manner,    and  
+    PATCH version when you make backwards-compatible bug fixes.
+
+    Obviously this only applies once you release a stable build, aka `version 1.0.0.` As long as you linger in versions 0.x.y you do not issue a `MAJOR`-version bump.
+    
+    This versioning convention will cause a lot of version bumps, but this is intended behaviour. We want to give the users the transparency of our development, as well as the choice of versions compatible with their systems.
+
+    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number, generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter **TODO**]() on language specific tools).
+    
+    <sub>**Side note:** For more explanation on the idea of SemVer and `semantic-release`, we recommend watching the talk [_Kill all humans_](https://www.youtube.com/watch?v=ZXyx_1kN1L8) by one of the engineers of `semantic-release` or reading through the official [documentation](https://semantic-release.gitbook.io/semantic-release/).</sub>
+    
+    For `semantic-release` to work properly, it requires commits to be formatted to a standard which by default is the [_Angular Commit Message Standard_](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message), but it technically could be customized to any other standard. You can read through the specifications [here](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message). `semantic-release` basically analyzes the commit message and then generates version number and changelog based on that. This drastically reduces the points of failure, and you as a developer just need to make sure to write correct commit messages as everything else is handled for you.  
+    For adhering to the standard, we recommend using the [Commitizen CLI-tool](https://commitizen.github.io/cz-cli/) or the JetBrains-IDE plugin [Git-Commit-Template](https://plugins.jetbrains.com/plugin/9861-git-commit-template) if you are working with one of their IDEs. Even if you are not using `semantic-release`, we advise to use this standard, as it helps to keep the commits readable and standardized all over the project.  
+    
+    <sub>**Side note:** If your commits are not formatted correctly, `semantic-release` will not work which could cause problems for the whole CI/CD pipeline. </sub>
+    
+- **Larger Software Products**:  
+    Obviously unlike public APIs and packages, too frequent version bumps might be undesirable. Imagine your operating system needing to update hundreds of times a day, because developers pushed bugfixes and little features.  
+    Instead releasing new versions manually or in fixed interwalls (weekly, monthly, per quarter, etc.) sounds more reasonable.
+    
+    _We are working to extend this part of the documentation, so please be patient for the update on software versioning of larger software products :)_  
 
 ### Travis-CI
 - travis.yml
@@ -108,7 +134,7 @@ We would like to encourage certain coding principles for this project in order t
 ### Language Specific Stuff
 **TODO**
 - JavaScript:
-    - code styling: Eslint (link to openease-eslint-config)
+    - code styling: Eslint (link to [openease-eslint-config](https://www.npmjs.com/package/@code-iai/eslint-config-openease))
     - semanticRelease & commitizen (provide links)
     - recommended testing framework: jest
     - external tools: Snyk, Greenkeeper
@@ -118,6 +144,6 @@ We would like to encourage certain coding principles for this project in order t
     - code styling: PEP-8 (auto enabled in JetBrains-IDEs) (& Pylint)
     - semanticRelease & commitizen (provide links)
     - recommended testing framework: pytest (monkeypatch)
-    - Version: 2.7 -> No support from 2020 on...
+    - Version: 2.7 due to ros -> No support from 2020 on...
     (- pipenv?)
 - Docker
