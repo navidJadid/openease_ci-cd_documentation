@@ -24,7 +24,7 @@ Continuous Deployment
 4. Future aspirations (alias the **dream**)
 
 ### Test-Driven-Development
-As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code which is written. Therefore we encourage everyone to develop test-first for this project. The procedure should be as follows:
+As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code that is written. Therefore we encourage everyone to develop test-first for this project. The procedure should be as follows:
 
 1. write unit-tests which test for the desired behaviour of the method
 2. write actual code
@@ -38,12 +38,12 @@ The philosophies when writing tests should be:
 - **test only one 'thing' per test**:  
     Each test should only test for one scenario or thing; for example, one test could cover what happens when `NULL` is passed as a parameter, while another one tests what happens when `INT_MAX` is passed. This will help during debugging as depending on the failing test it is easier to find the section in the code which does not work properly. E.g., If test `test_paramIsNull_returnZero()` fails you would know that the method is not returning 0 when `NULL` is passed as a parameter. This simply would not be possible when tests are multipurpose and cover all kind of scenarios.
 - **cover the different scenarios aka have high test coverage**:  
-    Testing for different kinds of scenarios ensures that your current implementation will run correctly, but it also ensures that future ones will. This alone should be enough motivation to write tests. Imagine switching out a dependency because it is deprecated but then the program keeps crashing. With existing tests it will much easier to make out what is going wrong with the new library which you are using.
+    Testing for different kinds of scenarios ensures that your current implementation will run correctly, but it also ensures that future ones will. This alone should be enough motivation to write tests. Imagine switching out a dependency because it is deprecated, but then the program keeps crashing. With existing tests it will much easier to make out what is going wrong with the new library which you are using.
 - **tests should execute quickly**:  
     This has two primary reason, the first one being more important than the second one:
     
     1)  To get timely feedback: If you made a change to a block of code, you do not want to wait 5 minutes each time to see whether your tests run successful. This will in the long run discourage developers to run (and maybe even write) tests, which obviously is not desirable.
-    2)  Most CI-pipelines have limited run-time per build (usually around 10-20 minutes). If your tests take too much time to execute the CI pipeline will just time out and you will not get any results.
+    2)  Most CI-pipelines have limited run-time per build (usually around 10-20 minutes). If your tests take too much time to execute the CI pipeline will just time out, and you will not get any results.
     
     As a hint, it is important to understand that if a code block runs with outer dependencies, it is often enough to just mock or stub these. If you wanna read up on mocking and stubbing, refer to [this wonderful article by Martin Fowler](https://www.martinfowler.com/articles/mocksArentStubs.html) or the more compact answers in [this stackoverflow article](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub?page=1&tab=votes#tab-top).
 
@@ -51,10 +51,10 @@ So far we have only talked about unit-test, but there is also something called _
 
 _We are working to extend this part of the documentation, so please be patient for the update on integrated testing :)_  
 
-<sub>**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with it's own merits and downsides, but maybe it is worth a look for some people :)</sub>
+<sub>**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with its own merits and downsides, but maybe it is worth a look for some people :)</sub>
 
 ### Software Versioning and Commit Standards
-Software Versioning is a delicate topic for many software engineers. In the same way it should be handled for this project, as we intend to have a transparent versioning scheme for the end-users.  
+Software Versioning is a delicate topic for many software engineers. It should be transparent as well as consistent. In the same way it should be handled for this project, as we intend to have a transparent versioning scheme for the end-users.  
 Now depending on the kind of software, versioning should be handled differently. We will list a few types of software and our preferred versioning scheme. We aim to extend to this list, so if you have suggestions, let us now.
 
 - **Public APIs and Packages**:  
@@ -66,7 +66,7 @@ Now depending on the kind of software, versioning should be handled differently.
     MINOR version when you add functionality in a backwards-compatible manner,    and  
     PATCH version when you make backwards-compatible bug fixes.
 
-    All other changes, like on the documentation or tests would not cause a version bump as they do not directly affect production code.
+    All other changes, like on the documentation or tests would not cause a version bump, as they do not directly affect production code.
     
     Obviously use SemVer only after you release a stable build, aka `version 1.0.0`. As long as you linger in versions `0.x.y` you do not need to issue a `MAJOR`-version bump.
     
@@ -88,7 +88,10 @@ Now depending on the kind of software, versioning should be handled differently.
     _We are working to extend this part of the documentation, so please be patient for the update on software versioning of larger software products :)_  
 
 ### Travis-CI
-- travis.yml
+Travis-CI is our current CI-provider of choice. Travis-CI offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. Travis-CI can be activated from the GitHub marketplace, then the repository needs to be manually checked on [travis-ci.org](https://travis-ci.org).  
+You're almost ready to go, just add a `travis.yml` file to your repository. This file will tell Travis-CI, among other things, where to find the tests, which language the code base is written in, which test framework to use, etc. In [Chapter **TODO**]() we will provide a few tips on that. For more details, please refer to the [Travis-CI documentation](https://docs.travis-ci.com/).
+
+Travis-CI can also be set up together with `semantic-release`. For that, please refer to the official [`semantic-release` documentation](https://semantic-release.gitbook.io/semantic-release/).
 
 ### Repository Setup
 - setup
@@ -99,7 +102,7 @@ Now depending on the kind of software, versioning should be handled differently.
     (- semantic-release)
 
 ### Coding Principles
-We would like to encourage certain coding principles for this project in order to keep the code base consistent, maintainable and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important:
+We would like to encourage certain coding principles for this project, in order to keep the code base consistent, maintainable, and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important:
 
 **TODO**
 1. Variable, Class, Module Naming
@@ -108,14 +111,14 @@ We would like to encourage certain coding principles for this project in order t
     
     Let's consider this very crude example in python:
     
-    ```
+    ```python
     # variable to store population size
     a = get_population_size() 
     ```
     
     or even worse
     
-    ```
+    ```python
     # variable to store population size
     population_size = get_population_size() 
     ```
