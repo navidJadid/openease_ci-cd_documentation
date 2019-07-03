@@ -70,7 +70,7 @@ _We are working to extend this part of the documentation, so please be patient f
 <sub>**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with its own merits and downsides, but maybe it is worth a look for some people :)</sub>
 
 ### Software Versioning and Commit Standards
-Software Versioning is a delicate topic for many software engineers. It should be transparent as well as consistent. In the same way it should be handled for this project, as we intend to have a transparent versioning scheme for the end-users.  
+Software Versioning is a delicate topic for many software engineers, as it should be transparent as well as consistent.
 Now depending on the kind of software, versioning should be handled differently. We will list a few types of software and our preferred versioning scheme. We aim to extend to this list, so if you have suggestions, let us now.
 
 - **Public APIs and Packages**:  
@@ -124,7 +124,7 @@ We would like to encourage certain coding principles for this project, in order 
 **TODO**
 1. Variable, Class, Module Naming
 2. Comments  
-    Go by this rule of thumb: The more you need to comment your code, the more you know something is probably wrong with it. Comments can (and probably will) clutter your code and make it less readable. Most of the time, if variables, classes and functions are named correctly and proper encapsulation is used, then there is (almost) no need for comments.
+    Go by this rule of thumb: The more you need to comment your code, the more you know something is probably wrong with it. Comments can (and probably will) clutter your code and make it less readable. Most of the time, if variables, classes and functions are named correctly and properly encapsulated, then there is (almost) no need for comments.
     
     Let's consider this very crude example in python:
     
