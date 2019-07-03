@@ -26,7 +26,7 @@ Overall we will only give a short summary of the necessary here, but if you are 
 
     With _CI_ we already resolve conflicts as soon as they appear, tests give us confidence our build is actually stable, running them in production environment in addition to only on our own machines reassures us of that even more, and with _CD_ we possibly do not even have release dates anymore, as we just release any changes that are stable according to the pipeline.
 
-    **To conclude:** _CI/CD_ increases quality of software, automates redundant tasks, and reduces human error as much as possible. When a pipeline is set up correctly, you as a developer can focus more on writing code, than wasting time manually deploying or stressing yourself out on merging 10 branches into master before friday.
+    **To conclude:** _CI/CD_ increases quality of software, automates redundant tasks, and reduces human error as much as possible. When a pipeline is set up correctly, you as a developer can focus more on writing code than wasting time manually deploying or stressing yourself out on merging 10 branches into master before friday.
 
 3. **Current CI/CD pipeline of the project: Travis-CI**  
 **TODO**  
