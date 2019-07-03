@@ -11,26 +11,33 @@ Like any bigger software, it is desirable to establish certain working and codin
 ### CI/CD
 Overall we will only give a short summary of the necessary here, but if you are more interested in CI/CD, then we recommend reading this extensive [series of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment) which we more or less indirectly cite here. 
 
-1. **What are CI and CD?**  
-    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into master/production/development (or however your release branch is called). Upon merging, the pipeline will run automated tests (therefore TDD is necessary, we touch on that in [Chapter **TODO**]()) and possibly other tasks. If tests fails, the developers now know there are problems and these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is deployable.  
+1. **What are _CI_ and _CD_?**  
+    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into master/production/development (or however your release branch is called). Upon merging, the pipeline will run automated tests in augmented production environments (therefore TDD is necessary, we touch on that in [Chapter **TODO**]()) and possibly other tasks. If tests fails, the developers now know there are problems and these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is deployable.  
     In the very simplest case there exists only a master branch which every one is pushing to. This might work for small productions, but larger ones naturally require feature, patch, or version branches. These then regularly merge changes from master into themselves, to minimize merge conflicts when merging back into it.
 
     <sub>**Side note:** For branching and in general more in-depth explanations of these principles, please refer to mentioned [set of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment).</sub>
 
     _CD_ on the other hand can refer to either _Continuous Delivery_ or _Continuous Deployment_:
-    - _Continuous Delivery_ aims to automate the delivery or release process, so any build can be released with the press of a button. Through CI we are already provided with high confidence that our software is stable, so this automation of release reduces yet another possible point of (human) failure.  
+    - _Continuous Delivery_ aims to automate the delivery or release process, so any build can be released with the press of a button. Through _CI_ we are already provided with high confidence that our software is stable, so this automation of release reduces yet another possible point of (human) failure.  
     - _Continuous Deployment_ basically combines the previous two practices. When committed changes successfully pass through all the stages of the _CI_-pipeline, that build will be automatically released. This means for one, that there is no release day anymore, and for the other, that developers can see their changes go live within a few minutes after pushing. 
 
-2. **Why use CI and CD?**
-Ever been through "Merging Hell"? Then you know why. If not, believe us the "Hell" in the name is well deserved. Basically this refers to the practice to have several development branches which needed to be merged into production before each deadline. This caused a bunch of merge conflicts, which needed to be fixed.
-**TODO**
+2. **Why use _CI_ and _CD_?**
+    Ever been through "Merging Hell"? Then you know why. If not, believe us the "Hell" in the name is well deserved. Basically this refers to the practice to have several development branches which needed to be merged into production before each deadline. This caused a bunch of merge conflicts, which needed to be fixed before release. You might be able to imagine this is quite stressful and we do not want to put anyone through this.
+
+    With _CI_ we already resolve conflicts as soon as they appear, tests give us confidence our build is actually stable, running them in production environment in addition to only on our own machines reassures us of that even more, and with _CD_ we possibly do not even have release dates anymore, as we just release any changes that are stable according to the pipeline.
+
+    **To conclude:** _CI/CD_ increases quality of software, automates redundant tasks, and reduces human error as much as possible. When a pipeline is set up correctly, you as a developer can focus more on writing code, than wasting time manually deploying or stressing yourself out on merging 10 branches into master before friday.
 
 3. **Current CI/CD pipeline of the project: Travis-CI**  
 **TODO**  
-Travis-CI is our current CI-provider of choice. Travis-CI offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. 
+Travis-CI is our current CI-provider of choice. Travis-CI offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build.
 
 4. **Future aspirations (alias the _dream_)**  
 **TODO**
+- openEASE CI/CD
+- modules CI/CD
+- openEASE and modules as well check for dependecy updates itself, run the build and deploy automatically
+- tools for easy repository setup
 
 ### Test-Driven-Development
 As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code that is written. Therefore we encourage everyone to develop test-first for this project. The procedure should be as follows:
