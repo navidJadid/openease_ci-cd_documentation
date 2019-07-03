@@ -9,19 +9,28 @@ Like any bigger software, it is desirable to establish certain working and codin
 2. [chapter](#link_to_chapter)
 
 ### CI/CD
-Overall we will only give a short summary of the necessary here, but if you are more interested in CI/CD, then we recommend reading this extensive [series of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment). 
+Overall we will only give a short summary of the necessary here, but if you are more interested in CI/CD, then we recommend reading this extensive [series of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment) which we more or less indirectly cite here. 
 
+1. **What are CI and CD?**  
+    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into master/production/development (or however your release branch is called). Upon merging, the pipeline will run automated tests (therefore TDD is necessary, we touch on that in [Chapter **TODO**]()) and possibly other tasks. If tests fails, the developers now know there are problems and these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is deployable.  
+    In the very simplest case there exists only a master branch which every one is pushing to. This might work for small productions, but larger ones naturally require feature, patch, or version branches. These then regularly merge changes from master into themselves, to minimize merge conflicts when merging back into it.
+
+    <sub>**Side note:** For branching and in general more in-depth explanations of these principles, please refer to mentioned [set of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment).</sub>
+
+    _CD_ on the other hand can refer to either _Continuous Delivery_ or _Continuous Deployment_:
+    - _Continuous Delivery_ aims to automate the delivery or release process, so any build can be released with the press of a button. Through CI we are already provided with high confidence that our software is stable, so this automation of release reduces yet another possible point of (human) failure.  
+    - _Continuous Deployment_ basically combines the previous two practices. When committed changes successfully pass through all the stages of the _CI_-pipeline, that build will be automatically released. This means for one, that there is no release day anymore, and for the other, that developers can see their changes go live within a few minutes after pushing. 
+
+2. **Why use CI and CD?**
+Ever been through "Merging Hell"? Then you know why. If not, believe us the "Hell" in the name is well deserved. Basically this refers to the practice to have several development branches which needed to be merged into production before each deadline. This caused a bunch of merge conflicts, which needed to be fixed.
 **TODO**
-1. What are CI and CD?
-Continuous Integration
-Continuous Delivery
-Continuous Deployment
 
-2. Why use CI and CD?
+3. **Current CI/CD pipeline of the project: Travis-CI**  
+**TODO**  
+Travis-CI is our current CI-provider of choice. Travis-CI offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. 
 
-3. Current CI/CD pipeline of the project: Travis-CI
-
-4. Future aspirations (alias the **dream**)
+4. **Future aspirations (alias the _dream_)**  
+**TODO**
 
 ### Test-Driven-Development
 As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code that is written. Therefore we encourage everyone to develop test-first for this project. The procedure should be as follows:
@@ -87,12 +96,6 @@ Now depending on the kind of software, versioning should be handled differently.
     
     _We are working to extend this part of the documentation, so please be patient for the update on software versioning of larger software products :)_  
 
-### Travis-CI
-Travis-CI is our current CI-provider of choice. Travis-CI offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. Travis-CI can be activated from the GitHub marketplace, then the repository needs to be manually checked on [travis-ci.org](https://travis-ci.org).  
-You're almost ready to go, just add a `travis.yml` file to your repository. This file will tell Travis-CI, among other things, where to find the tests, which language the code base is written in, which test framework to use, etc. In [Chapter **TODO**]() we will provide a few tips on that. For more details, please refer to the [Travis-CI documentation](https://docs.travis-ci.com/).
-
-Travis-CI can also be set up together with `semantic-release`. For that, please refer to the official [`semantic-release` documentation](https://semantic-release.gitbook.io/semantic-release/).
-
 ### Repository Setup
 - setup
 - setup tool
@@ -100,6 +103,13 @@ Travis-CI can also be set up together with `semantic-release`. For that, please 
     - current release
     - travis build
     (- semantic-release)
+- Travis-CI:  
+    Travis-CI can be activated from the GitHub marketplace, then the repository needs to be manually checked on [travis-ci.org](https://travis-ci.org).  
+You're almost ready to go, just add a `travis.yml` file to your repository. This file will tell Travis-CI, among other things, where to find the tests, which language the code base is written in, which test framework to use, etc.  
+    **TODO**  
+    For more details, please refer to the [Travis-CI documentation](https://docs.travis-ci.com/).
+
+    Travis-CI can also be set up together with `semantic-release`. For that, please refer to the official [`semantic-release` documentation](https://semantic-release.gitbook.io/semantic-release/).
 
 ### Coding Principles
 We would like to encourage certain coding principles for this project, in order to keep the code base consistent, maintainable, and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important:
