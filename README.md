@@ -31,7 +31,7 @@ As mentioned in the previous chapter, for the whole CI pipeline to work it is ne
 3. run tests on code
 4. repeat steps 2 & 3 until tests run successful
 
-Tests are the tool which give us the confidence to merge into `master`, which is especially true when the code-base has a high test coverage. Later in [chapter **TODO**]() we will present some tools and libraries which determine the test coverage. Of course writing tests will not catch all errors and problems which might come up, but they are a reliable, fast and automated way to ensure correct behaviour for (the majority of) our code. Tests also scale up elegantly from low-level modules to high-level ones.
+Tests are the tool which give us the confidence to merge into `master`, which is especially true when the code-base has a high test coverage. Later in [Chapter **TODO**]() we will present some tools and libraries which determine the test coverage. Of course writing tests will not catch all errors and problems which might come up, but they are a reliable, fast and automated way to ensure correct behaviour for (the majority of) our code. Tests also scale up elegantly from low-level modules to high-level ones.
 
 The philosophies when writing tests should be:
 
@@ -79,7 +79,7 @@ Now depending on the kind of software, versioning should be handled differently.
     For `semantic-release` to work properly, it requires commits to be formatted to a standard which by default is the [_Angular Commit Message Standard_](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message), but it technically could be customized to any other standard. You can read through the specifications [here](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message). `semantic-release` basically analyzes the commit message and then generates version number and changelog based on that. This drastically reduces the points of failure, and you as a developer just need to make sure to write correct commit messages as everything else is handled for you.  
     For adhering to the standard, we recommend using the [Commitizen CLI-tool](https://commitizen.github.io/cz-cli/) or the JetBrains-IDE plugin [Git-Commit-Template](https://plugins.jetbrains.com/plugin/9861-git-commit-template) if you are working with one of their IDEs. Even if you are not using `semantic-release`, we advise to use this standard, as it helps to keep the commits readable and standardized all over the project.  
     
-    <sub>**Side note:** If your commits are not formatted correctly, `semantic-release` will not work which could cause problems for the whole CI/CD pipeline. </sub>
+    <sub>**Side note:** If your commits are not formatted correctly, `semantic-release` will not work which could cause problems for the whole CI/CD pipeline.</sub>
     
 - **Larger Software Products**:  
     Obviously unlike public APIs and packages, too frequent version bumps might be undesirable. Imagine your operating system needing to update hundreds of times a day, because developers pushed bugfixes and little features.  
