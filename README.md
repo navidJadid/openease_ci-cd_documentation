@@ -24,23 +24,33 @@ Overall we will only give a short summary of the necessary here, but if you are 
 2. **Why use _CI_ and _CD_?**
     Ever been through "Merging Hell"? Then you know why. If not, believe us the "Hell" in the name is well deserved. Basically this refers to the practice to have several development branches which needed to be merged into production before each deadline. This caused a bunch of merge conflicts, which needed to be fixed before release. You might be able to imagine this is quite stressful and we do not want to put anyone through this.
 
-    With _CI_ we already resolve conflicts as soon as they appear, tests give us confidence our build is actually stable, running them in production environment in addition to only on our own machines reassures us of that even more, and with _CD_ we possibly do not even have release dates anymore, as we just release any changes that are stable according to the pipeline.
+    With _CI_ we already resolve conflicts as soon as they appear, tests give us confidence our build is actually stable, running them in production environment (in addition to only on our own machines) reassures us of that even more, and with _CD_ we possibly do not even have release dates anymore, as we just release any changes that are stable according to the pipeline.
 
     **To conclude:** _CI/CD_ increases quality of software, automates redundant tasks, and reduces human error as much as possible. When a pipeline is set up correctly, you as a developer can focus more on writing code than wasting time manually deploying or stressing yourself out on merging 10 branches into master before friday.
 
 3. **Current CI/CD pipeline of the project: Travis-CI**  
-**TODO**  
-Travis-CI is our current CI-provider of choice. Travis-CI offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build.
+    Now after all this talk, you might think we have these systems implemented all over the project already, right?
+    
+    Not right.
+    
+    Not right?!  
+    <sub>(Kudos, if you get the reference...)</sub>
+
+    The whole point of this document is to encourage the implementation of these systems in this project. For clarification: By no means do you _have_ to use them for non-public projects, as it can be straight up excessive (of course you can, but your mileage may wary). However, when it comes to our open-source software, we think offering transparency, consistency, and software of high quality should be priorities. Yet, so far, only few of our open-source projects implement _CI_, code quality tools, if anything at all... (don't even mention _CD_...)
+
+    Concerning our _CI_-provider of choice: The parts of our project that have a _CI_-pipeline use [_Travis-CI_](https://travis-ci.org). _Travis-CI_ offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. We will talk more about _Travis-CI_ in [Chapter **TODO**]().
 
 4. **Future aspirations (alias the _dream_)**  
-**TODO**
-- openEASE CI/CD
-- modules CI/CD
-- openEASE and modules as well check for dependecy updates itself, run the build and deploy automatically
-- tools for easy repository setup
+    Naturally, the dream is to implement _CI/CD_ for all of openEASE: When changes are committed they run through the pipeline, are versioned properly and automatically shipped. Then, when dependencies get updated, the modules get notified, run the build with the updated dependency, and automatically deploy or issue pull requests upon successfully passing the pipeline. Alongside that, feature or patching branches automatically merge in changes from master regularly to avoid drifting off.
+
+    Naturally, setting up these systems should be easy and quick (otherwise nobody will use them...), therefore, we plan to provide tools for exactly that. For example, we would like to have a tool which automates setting up repositories together with all the necessary _CI/CD_ stuff, coding quality tools, etc.
+
+    <sub>**Side note:** If you are interested in developing such software, please get into contact with us.</sub>
+
+    Once more, the point is, the more of these tasks can be automated, the more time is left for you to spend on researching and developing, while having good faith in the stability of the software. Hence, seeds we plant now will reap enormous benefits later...
 
 ### Test-Driven-Development
-As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code that is written. Therefore we encourage everyone to develop test-first for this project. The procedure should be as follows:
+As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code that is written. Therefore, we encourage everyone to develop test-first for this project. The procedure should be as follows:
 
 1. write unit-tests which test for the desired behaviour of the method
 2. write actual code
@@ -92,7 +102,7 @@ Now depending on the kind of software, versioning should be handled differently.
     
     <sub>**Side note:** For more explanation on the idea of SemVer and `semantic-release`, we recommend watching the talk [_Kill all humans_](https://www.youtube.com/watch?v=ZXyx_1kN1L8) by one of the engineers of `semantic-release` or reading through the official [documentation](https://semantic-release.gitbook.io/semantic-release/).</sub>
     
-    For `semantic-release` to work properly, it requires commits to be formatted to a standard which by default is the [_Angular Commit Message Standard_](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message), but it technically could be customized to any other standard. You can read through the specifications [here](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message). `semantic-release` basically analyzes the commit message and then generates version number and changelog based on that. This drastically reduces the points of failure, and you as a developer just need to make sure to write correct commit messages as everything else is handled for you.  
+    For `semantic-release` to work properly, it requires commits to be formatted to a standard which by default is the [_Angular Commit Message Standard_](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message), but it technically could be customized to any other standard. You can read through the specifications [here](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message). `semantic-release` basically analyzes the commit message and then generates version number (according to SemVer) and changelog based on that. This drastically reduces the points of failure, and you as a developer just need to make sure to write correct commit messages as everything else is handled for you.  
     For adhering to the standard, we recommend using the [Commitizen CLI-tool](https://commitizen.github.io/cz-cli/) or the JetBrains-IDE plugin [Git-Commit-Template](https://plugins.jetbrains.com/plugin/9861-git-commit-template) if you are working with one of their IDEs. Even if you are not using `semantic-release`, we advise to use this standard, as it helps to keep the commits readable and standardized all over the project.  
     
     <sub>**Side note:** If your commits are not formatted correctly, `semantic-release` will not work which could cause problems for the whole CI/CD pipeline.</sub>
@@ -105,11 +115,24 @@ Now depending on the kind of software, versioning should be handled differently.
 
 ### Repository Setup
 - setup
-- setup tool
+- testing suite
+    - code-coverage
+- code quality
+    - linter
+    - codacy
+- external tools
+- software versioning
+    - semantic-release
 - Badges:
     - current release
+    - current stable
     - travis build
     (- semantic-release)
+    (- codacy)
+    - license
+    - dependencies
+    - docker build or alike
+    (- registry downloads)
 - Travis-CI:  
     Travis-CI can be activated from the GitHub marketplace, then the repository needs to be manually checked on [travis-ci.org](https://travis-ci.org).  
 You're almost ready to go, just add a `travis.yml` file to your repository. This file will tell Travis-CI, among other things, where to find the tests, which language the code base is written in, which test framework to use, etc.  
@@ -117,6 +140,8 @@ You're almost ready to go, just add a `travis.yml` file to your repository. This
     For more details, please refer to the [Travis-CI documentation](https://docs.travis-ci.com/).
 
     Travis-CI can also be set up together with `semantic-release`. For that, please refer to the official [`semantic-release` documentation](https://semantic-release.gitbook.io/semantic-release/).
+
+- setup tool
 
 ### Coding Principles
 We would like to encourage certain coding principles for this project, in order to keep the code base consistent, maintainable, and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important:
