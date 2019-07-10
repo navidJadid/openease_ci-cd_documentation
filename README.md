@@ -143,40 +143,141 @@ You're almost ready to go, just add a `travis.yml` file to your repository. This
 
 - setup tool
 
-### Coding Principles
-We would like to encourage certain coding principles for this project, in order to keep the code base consistent, maintainable, and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important:
+_We are working to extend this part of the documentation, so please be patient for the update on repository setup :)_
 
-**TODO**
-1. Variable, Class, Module Naming
-2. Comments  
-    Go by this rule of thumb: The more you need to comment your code, the more you know something is probably wrong with it. Comments can (and probably will) clutter your code and make it less readable. Most of the time, if variables, classes and functions are named correctly and properly encapsulated, then there is (almost) no need for comments.
-    
-    Let's consider this very crude example in python:
-    
-    ```python
-    # variable to store population size
-    a = get_population_size() 
-    ```
-    
-    or even worse
+### Coding Principles
+We would like to encourage certain coding principles for this project, in order to keep the code base consistent, maintainable, and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important (aside from a proper project architecture):
+
+1. **Variable, Class, Module Naming**  
+    First and foremost, it is important to find precise and meaningful names for the components of your software. Meaningless or outright cryptic names will not do you and the other developers any favors. Let us look at a few examples:
     
     ```python
-    # variable to store population size
-    population_size = get_population_size() 
+    # bad
+    a = employee.get_age()
+    e_age = employee.get_age()
+    emage =  employee.get_age()
+    int_e_age = employee.get_age()
+    int_employee_age = employee.get_age()
+    
+    # good
+    employee_age = employee.get_age()
     ```
+        
+    If there is anything you wanna take from this, it would be: Good code should almost be readable like a book, because as far as we are concerned, developers usually speak English not Cryptic.
     
-    **TODO**
+    Reading `a` in your code does not give you any valuable information on the variable, you will certainly find yourself in the need to jump to the declaration.  
+    Next, the name `e_age` is also quite inconclusive, because you might know it represents some age, but you cannot be sure what `e` stands for.  
+    `emage` is even worse, because it does not separate the words in any way, and also one could think this is a typo for `image`.  
+    Lastly, you do not (I emphasize: **DO NOT!!!**) need to include the type into any method or variable names, as your IDE should be able resolve them in real-time.
     
-    Therefore, the more you code with this and the principles of 1) in mind, the more you will see that many comments are just totally unnecessary and only clutter the code.
+    <sub>**Side note:** In this example we used underscore name separation (which is standard practice in python), but of course feel free to use the accepted naming practice in your language, like, for example, [camelCase](https://sanaulla.info/2008/06/25/camelcase-notation-naming-convention-for-programming-languages/) in Java.</sub>
+    
+    Choosing precise and meaningful names allows us, among other things, to omit writing comments and documentation (at least project-intern), because the name indicates the function. For the same reason, developers will be forced less often to jump to the declaration.  
+    Also do not worry about names being too long. With auto-completion in IDEs nowadays, you do not actually have to type them out. A precise name gives us readable code with all the aforementioned benefits. Of course, whenever you find a better and shorter name, consider refactoring it.
+
+2. **Comments**  
+    Go by this rule of thumb: The more you need to comment your code, the more you know something is probably wrong with it. Comments can (and probably will) clutter your code and make it less readable. Let us go over a few examples:
+     
+     - **Comments instead of good naming**:  
+        Most of the time, if variables, classes and functions are named correctly and properly encapsulated, there is (almost) no need for comments. Let's consider this very crude example in python:
+    
+        ```python
+        # variable to store population size
+        a = get_population_size() 
+        ```
+        
+        or even worse
+        
+        ```python
+        # variable to store population size
+        population_size = get_population_size() 
+        ```
+        
+        In the first example, the variable naming is just bad, as the name `a` just does not tell us, what it is representing. A comment does not fix that issue, because to understand what is stored in `a`, we always have to jump back to this line. We hope you understand by now, that you should not name global use variables like that. Of course naming the iterator variable of your for-loop ike that is totally fine.
+         
+         The second example has a great name for the variable, therefore, the comment is totally unnecessary and it can be removed, like such:
+        
+        ```python
+        population_size = get_population_size()
+        ```
+        
+        Now everyone seeing the variable will know what it stored inside, and we can see, how proper naming makes the comment straight up unnecessary.
+    
+    - **Leaving dead code in comments**:  
+        Imagine going through some code, and coming across this tragedy:
+        
+        ```python
+        # FIXME
+        # do_something_uncertain()
+        # other_stuff_that_does_not_belong_here()
+        do_something_certain()
+        ```
+        
+        How are you supposed to know, what to do with those comments and whether they are of importance. Such comments only cause confusion and clutter the code. Instead you should delete them and consider creating an issue or a separate branch. With version history there should be no problem finding these lines of code again, even after you have deleted them.
+    
+    Therefore, the more you code with these principles and the ones from 1) in mind, the more you will see that many comments are just totally unnecessary and only clutter the code.
         
     Of course, there are cases where you will not get around writing comments, for example:
-    - When it is necessary to explain a particularity or a choice for a block of code
-    - Documentation for API's which are not project intern
-3. Encapsulation and Side-Effects  
+    - When it is necessary to explain a particularity or a choice for a block of code:
+    
+        ```python
+        '''
+        Explain particularities about the method ...
+        '''
+        complicated_method(some_parameters ...){
+          ...
+        }
+        ```
+    
+    - Documentation for API's which are not project intern:
+    
+        ```python
+            '''
+            Describe what the method does...
+            
+            Parameters:
+            -----------
+            param_1: type
+                     description of param_1 ...
+            param_2: type
+                     description of param_2 ...
+            
+            Returns:
+            --------
+            type
+                 description of that the class returns
+            '''
+            public_api_method(param_1, param_2 ...){
+              ...
+            }
+        ```
+     
+      <sub>**Side note:** This example uses the [numpy-docstring standard](https://numpydoc.readthedocs.io/en/latest/format.html#method-docstrings).</sub>
+     
+    - Short in-line comments, which are preferred, because they do not clutter the code as much:
+        
+        ```python
+        do_something()           # explain something briefly
+        ```
+    
+3. **Encapsulation and Side-Effects**  
+    Functions, modules, classes, etc., should all follow the single responsibility principle and be properly encapsulated. This causes the code to be more 'robust', because it has 'less reasons to change', due to the minimal amount of responsibilities. 
+    
+    <sub>**Side note:** If you wanna read more on encapsulation and the reasoning behind single responsibility components, refer to _Clean Code: A Handbook of Agile Software Craftsmanship_ by Uncle Rob.</sub>
+    
+    Often people associate these measures with object-oriented programming, but these can honestly be applied to any kind of programming, be it functional, data oriented, etc.
+    
+    One thing you should keep in mind, is to avoid so called _side effects_. When your method is called `get_total_number_of_employees()`, I expect it to only do as it says and not to also do something else. Let us say, the method would also send the retrieved number to some database. In that case it should be called something in the likes of `get_total_number_of_employees_and_send_to_db()`.
+    
     Wrapping external modules (library tests)
+    **TODO**
 
-- Code-Styling in the next chapter
-- JetBrains IDEs
+4. **Levels of abstraction**  
+**TODO**
+
+Of course, your priorities when developing should be to get it working first, then you can refactor and further apply the principles.
+
+Another point to consider is code style (like linting etc.) which should be uniform over the whole project. Since this is different for each language, we will touch on the specifics for each language in [Chapter **TODO**](). Some things, like _PEP-8_-linting are automatically enabled in JetBrains IDEs.
 
 ### Language Specific Stuff
 **TODO**
