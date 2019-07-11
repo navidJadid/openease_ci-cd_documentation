@@ -3,12 +3,15 @@ The openEASE-project is a large open-source-software package which is developed 
 Like any bigger software, it is desirable to establish certain working and coding guidelines, as well as to automatize whatever is possible in the development procedure like testing and deployment. Thus with this document we would like to explain the current CI/CD structure of our project, our ambitions for the future, as well as the core principles that we would like encourage for the development of this project, both for internal researchers as well as open-source contributors.
 
 ## Table of Contents
-**TODO: Table of Contents**
 
-1. [chapter](#link_to_chapter)
-2. [chapter](#link_to_chapter)
+1. [CI/CD](#1-cicd)
+2. [Test-Driven-Development](#2-test-driven-development)
+3. [Software Versioning & Commit Standards](#3-software-versioning--commit-standards)
+4. [Repository Setup](#4-repository-setup)
+5. [Coding Principles](#5-coding-principles)
+6. [Language Specific Stuff](#6-language-specific-stuff)
 
-### CI/CD
+### 1. CI/CD
 Overall we will only give a short summary of the necessary here, but if you are more interested in CI/CD, then we recommend reading this extensive [series of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment) which we more or less indirectly cite here. 
 
 1. **What are _CI_ and _CD_?**  
@@ -49,7 +52,7 @@ Overall we will only give a short summary of the necessary here, but if you are 
 
     Once more, the point is, the more of these tasks can be automated, the more time is left for you to spend on researching and developing, while having good faith in the stability of the software. Hence, seeds we plant now will reap enormous benefits later...
 
-### Test-Driven-Development
+### 2. Test-Driven-Development
 As mentioned in the previous chapter, for the whole CI pipeline to work it is necessary to have (unit-)tests which cover majority of the code that is written. Therefore, we encourage everyone to develop test-first for this project. The procedure should be as follows:
 
 1. write unit-tests which test for the desired behaviour of the method
@@ -79,7 +82,7 @@ _We are working to extend this part of the documentation, so please be patient f
 
 <sub>**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with its own merits and downsides, but maybe it is worth a look for some people :)</sub>
 
-### Software Versioning and Commit Standards
+### 3. Software Versioning & Commit Standards
 Humans can be arbitrary with their versioning schemes, hence it software versioning is a delicate topic for many software engineers. Most would agree, it should be transparent as well as consistent. Now depending on the kind of software, versioning should be handled differently. We will list a few types of software and our preferred versioning scheme. We aim to extend to this list, so if you have suggestions, let us now.
 
 - **Public APIs and Packages**:  
@@ -112,7 +115,7 @@ Humans can be arbitrary with their versioning schemes, hence it software version
     
     _We are working to extend this part of the documentation, so please be patient for the update on software versioning of larger software products :)_  
 
-### Repository Setup
+### 4. Repository Setup
 - setup
 - testing suite
     - code-coverage
@@ -144,8 +147,8 @@ You're almost ready to go, just add a `travis.yml` file to your repository. This
 
 _We are working to extend this part of the documentation, so please be patient for the update on repository setup :)_
 
-### Coding Principles
-A code base should, first and foremost, be easily read- and maintainable. Except for performance-critical applications or code segments, these goals should not be neglected. If your project is not maintainable, it is doomed to fail sooner or later. Spending a bit more time writing tests or refactoring goes a long way, thus we would like to encourage a few easy-to-maintain coding principles.
+### 5. Coding Principles
+A code base should, first and foremost, be easily read- and maintainable. It is developers, humans, that in the end have to work on the code base. For that reason, these goals should have the highest priority (obviously except for performance-critical applications or code segments). If the project is not maintainable, it is doomed to fail sooner or later. Spending a bit more time writing tests or refactoring goes a long way, thus we would like to encourage a few easy-to-maintain coding principles.
 
 In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important (aside from a proper project architecture):
 
@@ -375,7 +378,7 @@ Of course, your priorities when developing should be to get it working first, th
 
 Another point to consider is code style (like linting etc.) which should be uniform over the whole project. Since this is different for each language, we will touch on the specifics for each language in [Chapter **TODO**](). Some things, like _PEP-8_-linting are automatically enabled in JetBrains IDEs.
 
-### Language Specific Stuff
+### 6. Language Specific Stuff
 - JavaScript:
     - code styling: Eslint (link to [openease-eslint-config](https://www.npmjs.com/package/@code-iai/eslint-config-openease))
     - semanticRelease & commitizen (provide links)
