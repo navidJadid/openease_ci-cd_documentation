@@ -15,7 +15,7 @@ Like any bigger software, it is desirable to establish certain working and codin
 Overall we will only give a short summary of the necessary here, but if you are more interested in CI/CD, then we recommend reading this extensive [series of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment) which we more or less indirectly cite here. 
 
 1. **What are _CI_ and _CD_?**  
-    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into the `master`-branch (or however your release branch is called) as often as possible. Upon merging, the pipeline will run (among other tasks) automated tests in augmented production environments (therefore TDD is necessary, we touch on that in [Chapter **TODO**]()). If tests fails, the developer now knows there are problems and that these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is releasable.  
+    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into the `master`-branch (or however your release branch is called) as often as possible. Upon merging, the pipeline will run (among other tasks) automated tests in augmented production environments (therefore TDD is necessary, we touch on that in [Chapter 2: Test-Driven-Development](#2-test-driven-development)). If tests fails, the developer now knows there are problems and that these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is releasable.  
     In the very simplest case there exists only a master branch which everyone is pushing to. This might work for small productions, but larger ones naturally require feature, patch, or version branches. These then regularly merge changes from master into themselves, to minimize merge conflicts when merging back into it.
 
     <sub>**Side note:** For branching and in general more in-depth explanations of these principles, please refer to mentioned [set of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment).</sub>
@@ -41,7 +41,7 @@ Overall we will only give a short summary of the necessary here, but if you are 
 
     The whole point of this document is to encourage the implementation of these systems in this project. For clarification: By no means do you _have_ to use them for non-public projects, as it can be straight up excessive (of course you can, but your mileage may wary). However, when it comes to our open-source software, we think offering transparency, consistency, and software of high quality should be priorities. Yet, so far, only few of our open-source projects implement _CI_, code quality tools, if anything at all... (don't even mention _CD_...)
 
-    Concerning our _CI_-provider of choice: The parts of our project that have a _CI_-pipeline use [_Travis-CI_](https://travis-ci.org). _Travis-CI_ offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. We will talk more about _Travis-CI_ in [Chapter **TODO**]().
+    Concerning our _CI_-provider of choice: The parts of our project that have a _CI_-pipeline use [_Travis-CI_](https://travis-ci.org). _Travis-CI_ offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. We will talk more about _Travis-CI_ in [Chapter 4: Repository Setup](#4-repository-setup).
 
 4. **Future aspirations (alias the _dream_)**  
     Naturally, the dream is to implement _CI/CD_ for all of openEASE: When changes are committed they run through the pipeline, are versioned properly and automatically shipped. Then, when dependencies get updated, the modules get notified, run the build with the updated dependency, and automatically deploy or issue pull requests upon successfully passing the pipeline. Alongside that, feature or patching branches automatically merge in changes from master regularly to avoid drifting off.
@@ -60,7 +60,7 @@ As mentioned in the previous chapter, for the whole CI pipeline to work it is ne
 3. run tests on code
 4. repeat steps 2 & 3 until tests run successful
 
-Tests are the tool which give us the confidence to merge into `master`, which is especially true when the code-base has a high test coverage. Later in [Chapter **TODO**]() we will present some tools and libraries which determine the test coverage. Of course writing tests will not catch all errors and problems which might come up, but they are a reliable, fast and automated way to ensure correct behaviour for (the majority of) our code. Tests also scale up elegantly from low-level modules to high-level ones.
+Tests are the tool which give us the confidence to merge into `master`, which is especially true when the code-base has a high test coverage. Later in [Chapter 6: Language Specific Stuff](#6-language-specific-stuff) we will present some tools and libraries which determine the test coverage. Of course writing tests will not catch all errors and problems which might come up, but they are a reliable, fast and automated way to ensure correct behaviour for (the majority of) our code. Tests also scale up elegantly from low-level modules to high-level ones.
 
 The philosophies when writing tests should be:
 
@@ -100,7 +100,7 @@ Humans can be arbitrary with their versioning schemes, hence it software version
     
     This versioning convention will cause a lot of version bumps, but this is intended behaviour. We want to give the users the transparency of our development, as well as the choice of versions compatible with their systems.
 
-    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter **TODO**]() on language specific stuff).
+    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter 6: Language Specific Stuff](#6-language-specific-stuff)).
     
     <sub>**Side note:** For more explanation on the idea of SemVer and `semantic-release`, we recommend watching the talk [_Kill all humans_](https://www.youtube.com/watch?v=ZXyx_1kN1L8) by one of the engineers of `semantic-release` or reading through the official [documentation](https://semantic-release.gitbook.io/semantic-release/).</sub>
     
@@ -302,7 +302,7 @@ In large our coding guidelines are derived from the book _Clean Code: A Handbook
     }
     ```
     
-    This looks messy and unreadable. We have mixed all kinds of levels of abstraction, the method is too long and handles way too many responsibilities, like calculating the values which it wants to print. Ideally it would just get these values from the `country`-object and print them. Therefore, we would like to extract a method which calculates the income-per-capita of the `country`-object. Then our code could look something like this:
+    This code looks messy and unreadable. We have mixed all kinds of levels of abstraction, the method is too long and handles way too many responsibilities, like calculating the values which it wants to print. Ideally it would just get these values from the `country`-object and print them. Therefore, we would like to extract a method which calculates the income-per-capita of the `country`-object. Then our code could look something like this:
     
     ```python
     print_country_stats(country){
@@ -338,7 +338,7 @@ In large our coding guidelines are derived from the book _Clean Code: A Handbook
     }
     ```
     
-    If we now take a look at the extracted method, we can directly see calculating the total income inside the method really clutters the code and also does not maintain the same level of abstraction. Instead it should just be member of the `Country`-class:
+    If we now take a look at the extracted method, we can directly see calculating the total income inside the method really clutters the code and also does not maintain the same level of abstraction. Instead it should just be a separate method of the `Country`-class:
     
     ```python
     Class Country{
@@ -376,7 +376,7 @@ In large our coding guidelines are derived from the book _Clean Code: A Handbook
 
 Of course, your priorities when developing should be to get it working first, then you can refactor and further apply the principles.
 
-Another point to consider is code style (like linting etc.) which should be uniform over the whole project. Since this is different for each language, we will touch on the specifics for each language in [Chapter **TODO**](). Some things, like _PEP-8_-linting are automatically enabled in JetBrains IDEs.
+Another point to consider is code style (like linting etc.) which should be uniform over the whole project. Since this is different for each language, we will touch on in [Chapter 6: Language Specific Stuff](#6-language-specific-stuff). Some things, like _PEP-8_-linting are automatically enabled in JetBrains IDEs.
 
 ### 6. Language Specific Stuff
 - JavaScript:
