@@ -116,34 +116,32 @@ Humans can be arbitrary with their versioning schemes, hence it software version
     _We are working to extend this part of the documentation, so please be patient for the update on software versioning of larger software products :)_  
 
 ### 4. Repository Setup
-- setup
-- testing suite
-    - code-coverage
-- code quality
-    - linter
-    - codacy
-- external tools
-- software versioning
-    - semantic-release
-- Badges:
-    - current release
-    - current stable
-    - travis build
-    (- semantic-release)
-    (- codacy)
-    - license
-    - dependencies
-    - docker build or alike
-    (- registry downloads)
-- Travis-CI:  
+When setting up a new repository please go through the following steps (if possible):
+
+1. Add a `.gitignore`-file to your repository
+2. Add a `README.md` which at the very least explains the purpose of the repository. You are free to add more information, but make sure to maintain it properly during development :)
+3. Add a testing suite with code coverage tools to your repository
+4. Enable Travis-CI for your repository and add a `travis.yml` to your repository:  
     Travis-CI can be activated from the GitHub marketplace, then the repository needs to be manually checked on [travis-ci.org](https://travis-ci.org).  
 You're almost ready to go, just add a `travis.yml` file to your repository. This file will tell Travis-CI, among other things, where to find the tests, which language the code base is written in, which test framework to use, etc.  
-    **TODO**  
+      
     For more details, please refer to the [Travis-CI documentation](https://docs.travis-ci.com/).
 
     Travis-CI can also be set up together with `semantic-release`. For that, please refer to the official [`semantic-release` documentation](https://semantic-release.gitbook.io/semantic-release/).
+5. Add code-quality tools, like linters or tools like [_Codacy_](https://www.codacy.com/)
+6. Consider adding tools for software versioning, like [`semantic-release`](https://semantic-release.gitbook.io/semantic-release/)
+7. Add badges to your `README.md`, so readers cab get a quick overview of the state of the project. A few ideas for possible badges:
+    - current release
+    - current stable release
+    - travis build
+    - license
+    - dependencies
+    - docker build or alike
+    - semantic-release
+    - codacy
+    - registry downloads
 
-- setup tool
+As mentioned in [Chapter 1: CI/CD](#1-cicd), we would like to develop a tool which automates all of this. Until then these steps will have to be done by hand. Please be patient for the tool to ship. If you are interested in the development of such a tool, consider getting in touch with us :)
 
 _We are working to extend this part of the documentation, so please be patient for the update on repository setup :)_
 
