@@ -1,5 +1,5 @@
 # openease_ci-cd_documentation
-The openEASE-project is a large open-source-software package which is developed as a tool for research on Robotics and Artificial Intelligence by the department for AI at the University of Bremen.
+The openEASE-project is a large open-source-software package which is developed as a tool for research on Robotics and Artificial Intelligence by the department for AI at the University of Bremen.  
 Like any bigger software, it is desirable to establish certain working and coding guidelines, as well as to automatize whatever is possible in the development procedure like testing and deployment. Thus with this document we would like to explain the current CI/CD structure of our project, our ambitions for the future, as well as the core principles that we would like encourage for the development of this project, both for internal researchers as well as open-source contributors.
 
 ## Table of Contents
@@ -12,7 +12,7 @@ Like any bigger software, it is desirable to establish certain working and codin
 Overall we will only give a short summary of the necessary here, but if you are more interested in CI/CD, then we recommend reading this extensive [series of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment) which we more or less indirectly cite here. 
 
 1. **What are _CI_ and _CD_?**  
-    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into master/production/development (or however your release branch is called). Upon merging, the pipeline will run (among other tasks) automated tests in augmented production environments (therefore TDD is necessary, we touch on that in [Chapter **TODO**]()). If tests fails, the developer now knows there are problems and that these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is deployable.  
+    _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into the `master`-branch (or however your release branch is called) as often as possible. Upon merging, the pipeline will run (among other tasks) automated tests in augmented production environments (therefore TDD is necessary, we touch on that in [Chapter **TODO**]()). If tests fails, the developer now knows there are problems and that these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is releasable.  
     In the very simplest case there exists only a master branch which everyone is pushing to. This might work for small productions, but larger ones naturally require feature, patch, or version branches. These then regularly merge changes from master into themselves, to minimize merge conflicts when merging back into it.
 
     <sub>**Side note:** For branching and in general more in-depth explanations of these principles, please refer to mentioned [set of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment).</sub>
@@ -22,11 +22,11 @@ Overall we will only give a short summary of the necessary here, but if you are 
     - _Continuous Deployment_ basically combines the previous two practices. When committed changes successfully pass through all the stages of the _CI_-pipeline, that build will be automatically released. This means for one, that there is no release day anymore, and for the other, that developers can see their changes go live within a few minutes after pushing. 
 
 2. **Why use _CI_ and _CD_?**
-    Ever been through "Merging Hell"? Then you know why. If not, believe us the "Hell" in the name is well deserved. Basically this refers to the practice to have several development branches which needed to be merged into production before each deadline. This caused a bunch of merge conflicts, which needed to be fixed before release. You might be able to imagine this is quite stressful and we do not want to put anyone through this.
+    Ever been through "Merging Hell"? Then you know why. If not, believe us the "Hell" in the name is well deserved. Basically this refers to the practice to have several development branches which need to be merged into production before each deadline. This naturally causes a bunch of merge conflicts, which of course need to be fixed before release. You might be able to imagine this is quite stressful and we do not want to put anyone through this.
 
     With _CI_ we already resolve conflicts as soon as they appear, tests give us confidence our build is actually stable, running them in production environment (in addition to only on our own machines) reassures us of that even more, and with _CD_ we possibly do not even have release dates anymore, as we just release any changes that are stable according to the pipeline.
 
-    **To conclude:** _CI/CD_ increases quality of software, automates redundant tasks, and reduces human error as much as possible. When a pipeline is set up correctly, you as a developer can focus more on writing code than wasting time manually deploying or stressing yourself out on merging 10 branches into master before friday.
+    **To conclude:** _CI/CD_ increases quality of software, automates redundant tasks, and reduces human error as much as possible. When a pipeline is set up correctly, you as a developer can focus more on writing code than wasting time manually deploying or stressing yourself out about needing to merge 10 branches into master before friday.
 
 3. **Current CI/CD pipeline of the project: Travis-CI**  
     Now after all this talk, you might think we have these systems implemented all over the project already, right?
@@ -80,8 +80,7 @@ _We are working to extend this part of the documentation, so please be patient f
 <sub>**Side note for curious people:** There is a movement expanding on this idea called 'Documentation-Driven-Development' (DDD). The idea is to first write documentation which describes the desired behaviour, then to write tests according it, before finally writing the code. You can read up on it [here](https://gist.github.com/zsup/9434452) and a more practical and extensive article [here](https://medium.com/blacklane-engineering/documentation-driven-development-8b2ff119104f). DDD comes with its own merits and downsides, but maybe it is worth a look for some people :)</sub>
 
 ### Software Versioning and Commit Standards
-Software Versioning is a delicate topic for many software engineers, as it should be transparent as well as consistent.
-Now depending on the kind of software, versioning should be handled differently. We will list a few types of software and our preferred versioning scheme. We aim to extend to this list, so if you have suggestions, let us now.
+Humans can be arbitrary with their versioning schemes, hence it software versioning is a delicate topic for many software engineers. Most would agree, it should be transparent as well as consistent. Now depending on the kind of software, versioning should be handled differently. We will list a few types of software and our preferred versioning scheme. We aim to extend to this list, so if you have suggestions, let us now.
 
 - **Public APIs and Packages**:  
     For public APIs and Packages we would like to encourage use of [SemVer](https://semver.org/), which is an abbreviation for _semantic versioning_. To quote the official [documentation](https://semver.org/):
@@ -98,7 +97,7 @@ Now depending on the kind of software, versioning should be handled differently.
     
     This versioning convention will cause a lot of version bumps, but this is intended behaviour. We want to give the users the transparency of our development, as well as the choice of versions compatible with their systems.
 
-    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter **TODO**]() on language specific tools).
+    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter **TODO**]() on language specific stuff).
     
     <sub>**Side note:** For more explanation on the idea of SemVer and `semantic-release`, we recommend watching the talk [_Kill all humans_](https://www.youtube.com/watch?v=ZXyx_1kN1L8) by one of the engineers of `semantic-release` or reading through the official [documentation](https://semantic-release.gitbook.io/semantic-release/).</sub>
     
@@ -108,8 +107,8 @@ Now depending on the kind of software, versioning should be handled differently.
     <sub>**Side note:** If your commits are not formatted correctly, `semantic-release` will not work which could cause problems for the whole CI/CD pipeline.</sub>
     
 - **Larger Software Products**:  
-    Obviously unlike public APIs and packages, too frequent version bumps might be undesirable. Imagine your operating system needing to update hundreds of times a day, because developers pushed bugfixes and little features.  
-    Instead releasing new versions manually or in fixed interwalls (weekly, monthly, per quarter, etc.) sounds more reasonable.
+    Obviously unlike public APIs and packages, too frequent version bumps might be undesirable. Imagine your operating system needing to update hundreds of times a day, because developers pushed bug-fixes and little features.  
+    Instead, releasing new versions manually or in fixed intervals (weekly, monthly, per quarter, etc.) sounds more reasonable.
     
     _We are working to extend this part of the documentation, so please be patient for the update on software versioning of larger software products :)_  
 
@@ -146,7 +145,9 @@ You're almost ready to go, just add a `travis.yml` file to your repository. This
 _We are working to extend this part of the documentation, so please be patient for the update on repository setup :)_
 
 ### Coding Principles
-We would like to encourage certain coding principles for this project, in order to keep the code base consistent, maintainable, and easy to read. In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important (aside from a proper project architecture):
+A code base should, first and foremost, be easily read- and maintainable. Except for performance-critical applications or code segments, these goals should not be neglected. If your project is not maintainable, it is doomed to fail sooner or later. Spending a bit more time writing tests or refactoring goes a long way, thus we would like to encourage a few easy-to-maintain coding principles.
+
+In large our coding guidelines are derived from the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Spies, maybe better known by his alias Uncle Rob. We **strongly** recommend reading it, as it provides great ideas and principles to write readable and maintainable software. Now let us look at the coding principles which we regard as most important (aside from a proper project architecture):
 
 1. **Variable, Class, Module Naming**  
     First and foremost, it is important to find precise and meaningful names for the components of your software. Meaningless or outright cryptic names will not do you and the other developers any favors. Let us look at a few examples:
@@ -165,10 +166,7 @@ We would like to encourage certain coding principles for this project, in order 
         
     If there is anything you wanna take from this, it would be: Good code should almost be readable like a book, because as far as we are concerned, developers usually speak English not Cryptic.
     
-    Reading `a` in your code does not give you any valuable information on the variable, you will certainly find yourself in the need to jump to the declaration.  
-    Next, the name `e_age` is also quite inconclusive, because you might know it represents some age, but you cannot be sure what `e` stands for.  
-    `emage` is even worse, because it does not separate the words in any way, and also one could think this is a typo for `image`.  
-    Lastly, you do not (I emphasize: **DO NOT!!!**) need to include the type into any method or variable names, as your IDE should be able resolve them in real-time.
+    Reading `a` in your code does not give you any valuable information on the variable, you will certainly find yourself in the need to jump to the declaration. Next, the name `e_age` is also quite inconclusive, because you might know it represents some age, but you cannot be sure what `e` stands for. `emage` is even worse, because it does not separate the words in any way, and also one could think this is a typo for `image`. Lastly, you do not (I emphasize: **DO NOT!!!**) need to include the type into any method or variable names, as your IDE should be able resolve them in real-time.
     
     <sub>**Side note:** In this example we used underscore name separation (which is standard practice in python), but of course feel free to use the accepted naming practice in your language, like, for example, [camelCase](https://sanaulla.info/2008/06/25/camelcase-notation-naming-convention-for-programming-languages/) in Java.</sub>
     
@@ -193,7 +191,7 @@ We would like to encourage certain coding principles for this project, in order 
         population_size = get_population_size() 
         ```
         
-        In the first example, the variable naming is just bad, as the name `a` just does not tell us, what it is representing. A comment does not fix that issue, because to understand what is stored in `a`, we always have to jump back to this line. We hope you understand by now, that you should not name global use variables like that. Of course naming the iterator variable of your for-loop ike that is totally fine.
+        In the first example, the variable naming is just bad, as the name `a` just does not tell us, what it is representing. A comment does not fix that issue, because to understand what is stored in `a`, we always have to jump back to this line. We hope you understand by now, that you should not name global use variables in that manner. Of course naming the iterator variable of your small for-loop like that is totally fine.
          
          The second example has a great name for the variable, therefore, the comment is totally unnecessary and it can be removed, like such:
         
@@ -225,6 +223,22 @@ We would like to encourage certain coding principles for this project, in order 
         Explain particularities about the method ...
         '''
         complicated_method(some_parameters ...){
+          ...
+        }
+        ```
+        
+        or
+        
+        ```python
+        some_method(some_parameters ...){
+          ...
+    
+          '''
+          Explain particularities about block of code ...
+          '''
+          var = get_some_complicated_stuff()
+          more_complicated_stuff(var)
+    
           ...
         }
         ```
@@ -260,33 +274,115 @@ We would like to encourage certain coding principles for this project, in order 
         do_something()           # explain something briefly
         ```
     
-3. **Encapsulation and Side-Effects**  
-    Functions, modules, classes, etc., should all follow the single responsibility principle and be properly encapsulated. This causes the code to be more 'robust', because it has 'less reasons to change', due to the minimal amount of responsibilities. 
+3. **Encapsulation, Levels of Abstraction, and Side-Effects**  
+    Functions, modules, classes, etc., should all follow the single responsibility principle and be properly encapsulated. This will lead the code to be more 'robust', because it has 'less reasons to change', due to the minimal amount of responsibilities. This also kind of implies, that whenever possible, we keep components small and on the same level of abstraction. Let us look at an example, to see how these ideas help to keep code readable and properly encapsulated:
     
-    <sub>**Side note:** If you wanna read more on encapsulation and the reasoning behind single responsibility components, refer to _Clean Code: A Handbook of Agile Software Craftsmanship_ by Uncle Rob.</sub>
+    ```python
+    print_country_stats(country){
+      [...]
+      
+      population = country.get_population()
+      
+      income_source_a = country.get_total_income_from_source_a()
+      income_source_b = country.get_total_income_from_source_b()
+      [...]
+      
+      total_personal_income = income_source_a + income_source b + [...]    
+       
+      income_per_capita = total_personal_income / population
+      
+      [...]
+      
+      print(country.name)
+      print('Income per capita: {}', income_per_capita)
+      [...]
+    }
+    ```
+    
+    This looks messy and unreadable. We have mixed all kinds of levels of abstraction, the method is too long and handles way too many responsibilities, like calculating the values which it wants to print. Ideally it would just get these values from the `country`-object and print them. Therefore, we would like to extract a method which calculates the income-per-capita of the `country`-object. Then our code could look something like this:
+    
+    ```python
+    print_country_stats(country){
+      name = country.name
+   
+      [...]
+      
+      income_per_capita = country.calculate_income_per_capita()
+      
+      [...]
+      
+      print(name)
+      print('Income per capita: {}', income_per_capita)
+      [...]
+    }
+ 
+    Class Country{
+      [...]
+   
+      calculate_income_per_capita() {
+        population = get_population()
+      
+        income_source_a = get_total_income_from_source_a()
+        income_source_b = get_total_income_from_source_b()
+        [...]
+      
+        total_personal_income = income_source_a + income_source b + [...]    
+       
+        return total_personal_income / population
+      }
+ 
+      [...]
+    }
+    ```
+    
+    If we now take a look at the extracted method, we can directly see calculating the total income inside the method really clutters the code and also does not maintain the same level of abstraction. Instead it should just be member of the `Country`-class:
+    
+    ```python
+    Class Country{
+      [...]
+      
+      calculate_total_personal_income() {
+        total_personal_income = 0
+        
+        for income_source in personal_income_sources:
+          total_personal_income += income_source
+     
+        return total_personal_income
+      }
+   
+      calculate_income_per_capita() {
+        population = get_population()
+        total_personal_income = calculate_total_personal_income()    
+       
+        return total_personal_income / population
+      }
+      
+      [...]
+    }
+    ```
+    
+    With that our previous method just becomes a three-liner. Much cleaner, more maintainable, and more readable :)
+    
+    Next, we would like to encourage the wrapping of external modules or libraries; even standard libraries, as these are not exempt to change either. The consequence is that all our business code will consist of code written internally by us, and external sources just become kind of plugins. This drastically reduces possible points of failure and eases maintainability. Imagine coming in need to switch some library. If it was not wrapped before, you have to refactor all the occurrences in the code. On the other hand, if you used a wrapper, you just change the occurrences in the wrapper class and make them work with the existing unit-tests. The code will work the same before and afterwards, and you did not need to change any other code.
     
     Often people associate these measures with object-oriented programming, but these can honestly be applied to any kind of programming, be it functional, data oriented, etc.
     
-    One thing you should keep in mind, is to avoid so called _side effects_. When your method is called `get_total_number_of_employees()`, I expect it to only do as it says and not to also do something else. Let us say, the method would also send the retrieved number to some database. In that case it should be called something in the likes of `get_total_number_of_employees_and_send_to_db()`.
+    <sub>**Side note:** If you wanna read more on encapsulation and the reasoning behind single responsibility components, refer to _Clean Code: A Handbook of Agile Software Craftsmanship_ by Uncle Rob, or [this blog article by him](https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html).</sub>
     
-    Wrapping external modules (library tests)
-    **TODO**
-
-4. **Levels of abstraction**  
-**TODO**
+    One last thing you should keep in mind, is to avoid so called _side effects_. When your method is called `get_total_number_of_employees()`, I expect it to only do as it says and not to also do something else. Let us say, the method would also send the retrieved number to some database. In that case it should be called something in the likes of `get_total_number_of_employees_and_send_to_db()`.
 
 Of course, your priorities when developing should be to get it working first, then you can refactor and further apply the principles.
 
 Another point to consider is code style (like linting etc.) which should be uniform over the whole project. Since this is different for each language, we will touch on the specifics for each language in [Chapter **TODO**](). Some things, like _PEP-8_-linting are automatically enabled in JetBrains IDEs.
 
 ### Language Specific Stuff
-**TODO**
 - JavaScript:
     - code styling: Eslint (link to [openease-eslint-config](https://www.npmjs.com/package/@code-iai/eslint-config-openease))
     - semanticRelease & commitizen (provide links)
     - recommended testing framework: jest
     - external tools: Snyk, Greenkeeper
     - NodeJs stuff: version etc.
+    - registry: npm, link documentation
     - ECMA 2017 & Browserify
 - Python:
     - code styling: PEP-8 (auto enabled in JetBrains-IDEs) (& Pylint)
@@ -295,3 +391,6 @@ Another point to consider is code style (like linting etc.) which should be unif
     - Version: 2.7 due to ros -> No support from 2020 on...
     (- pipenv?)
 - Docker
+- Codacy
+
+    _We are working to extend this part of the documentation, so please be patient for the update on language specific recommendations :)_  
