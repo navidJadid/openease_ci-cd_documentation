@@ -44,7 +44,7 @@ Overall we will only give a short summary of the necessary here, but if you are 
     Concerning our _CI_-provider of choice: The parts of our project that have a _CI_-pipeline use [_Travis-CI_](https://travis-ci.org). _Travis-CI_ offers unlimited builds for Open-Source-Projects with 15 minutes of pipeline runtime for each build. We will talk more about _Travis-CI_ in [Chapter 4: Repository Setup](#4-repository-setup).
 
 4. **Future aspirations (alias the _dream_)**  
-    Naturally, the dream is to implement _CI/CD_ for all of openEASE: When changes are committed they run through the pipeline, are versioned properly and automatically shipped. Then, when dependencies get updated, the modules get notified, run the build with the updated dependency, and automatically deploy or issue pull requests upon successfully passing the pipeline. Alongside that, feature or patching branches automatically merge in changes from master regularly to avoid drifting off.
+    The dream is to implement _CI/CD_ for all of openEASE: When changes are committed they run through the pipeline, are versioned properly and automatically shipped. Then, when dependencies get updated, the modules get notified, run the build with the updated dependency, and automatically deploy or issue pull requests upon successfully passing the pipeline. Alongside that, feature or patching branches automatically merge in changes from master regularly to avoid drifting off.
 
     Naturally, setting up these systems should be easy and quick (otherwise nobody will use them...), therefore, we plan to provide tools for exactly that. For example, we would like to have a tool which automates setting up repositories together with all the necessary _CI/CD_ stuff, coding quality tools, etc.
 
