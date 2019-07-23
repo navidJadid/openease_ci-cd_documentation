@@ -16,8 +16,7 @@ Overall we will only give a short summary of the necessary here, but if you are 
 
 1. **What are _CI_ and _CD_?**  
     _CI_ is an abbreviation for _Continuous Integration_ which is the practice to merge into the `master`-branch (or however your release branch is called) as often as possible. Upon merging, the pipeline will run (among other tasks) automated tests in augmented production environments (therefore TDD is necessary, we touch on that in [Chapter 2: Test-Driven-Development](#2-test-driven-development)). If tests fails, the developer now knows there are problems and that these should be resolved immediately, before other changes are merged into master. This is based on the premise, that master should whenever possible be in a state that is releasable.  
-    In the very simplest case there exists only a master branch which everyone is pushing to. This might work for small productions, but larger ones naturally require feature, patch, or version branches. These then regularly merge changes from master into themselves, to minimize merge conflicts when merging back into it.
-
+    In the very simplest case there exists only a master branch which everyone is pushing to. This might work for small productions, but larger ones naturally require feature, patch, or version branches. These then regularly merge changes from master into themselves, to minimize merge conflicts when merging back into it.  
     <sub>**Side note:** For branching and in general more in-depth explanations of these principles, please refer to mentioned [set of articles by Atlassian](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment).</sub>
 
     _CD_ on the other hand can refer to either _Continuous Delivery_ or _Continuous Deployment_:
@@ -46,8 +45,7 @@ Overall we will only give a short summary of the necessary here, but if you are 
 4. **Future aspirations (alias the _dream_)**  
     The dream is to implement _CI/CD_ for all of openEASE: When changes are committed they run through the pipeline, are versioned properly and automatically shipped. Then, when dependencies get updated, the modules get notified, run the build with the updated dependency, and automatically deploy or issue pull requests upon successfully passing the pipeline. Alongside that, feature or patching branches automatically merge in changes from master regularly to avoid drifting off.
 
-    Naturally, setting up these systems should be easy and quick (otherwise nobody will use them...), therefore, we plan to provide tools for exactly that. For example, we would like to have a tool which automates setting up repositories together with all the necessary _CI/CD_ stuff, coding quality tools, etc.
-
+    Naturally, setting up these systems should be easy and quick (otherwise nobody will use them...), therefore, we plan to provide tools for exactly that. For example, we would like to have a tool which automates setting up repositories together with all the necessary _CI/CD_ stuff, coding quality tools, etc.  
     <sub>**Side note:** If you are interested in developing such software, please get into contact with us.</sub>
 
     Once more, the point is, the more of these tasks can be automated, the more time is left for you to spend on researching and developing, while having good faith in the stability of the software. Hence, seeds we plant now will reap enormous benefits later...
@@ -100,13 +98,11 @@ Humans can be arbitrary with their versioning schemes, hence software versioning
     
     This versioning convention will cause a lot of version bumps, but this is intended behaviour. We want to give the users the transparency of our development, as well as the choice of versions compatible with their systems.
 
-    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter 6: Language Specific Stuff](#6-language-specific-stuff)).
-    
+    Now you might think that this all is great, but how do we guarantee that this standard is followed? Well, luckily there are tools which automate this, namely,  [semantic-release](https://semantic-release.gitbook.io/semantic-release/). `semantic-release` automatically bumps your version number based on your commit message (which we will explain in a minute), generates release notes and can even publish the package. To our knowledge, it is currently available as `npm`- and `pypi`-package (s. [Chapter 6: Language Specific Stuff](#6-language-specific-stuff)).      
     <sub>**Side note:** For more explanation on the idea of SemVer and `semantic-release`, we recommend watching the talk [_Kill all humans_](https://www.youtube.com/watch?v=ZXyx_1kN1L8) by one of the engineers of `semantic-release` or reading through the official [documentation](https://semantic-release.gitbook.io/semantic-release/).</sub>
     
     For `semantic-release` to work properly, it requires commits to be formatted to a standard which by default is the [_Angular Commit Message Standard_](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message), but it technically could be customized to any other standard. You can read through the specifications [here](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message). `semantic-release` basically analyzes the commit message and then generates version number (according to SemVer) and changelog based on that. This drastically reduces the points of failure, and you as a developer just need to make sure to write correct commit messages as everything else is handled for you.  
     For adhering to the standard, we recommend using the [Commitizen CLI-tool](https://commitizen.github.io/cz-cli/) or the JetBrains-IDE plugin [Git-Commit-Template](https://plugins.jetbrains.com/plugin/9861-git-commit-template) if you are working with one of their IDEs. Even if you are not using `semantic-release`, we advise to use this standard, as it helps to keep the commits readable and standardized all over the project.  
-    
     <sub>**Side note:** If your commits are not formatted correctly, `semantic-release` will not work which could cause problems for the whole CI/CD pipeline.</sub>
     
 - **Larger Software Products**:  
@@ -167,8 +163,7 @@ In large our coding guidelines are derived from the book _Clean Code: A Handbook
         
     If there is anything you wanna take from this, it would be: Good code should almost be readable like a book, because as far as we are concerned, developers usually speak English not Cryptic.
     
-    Reading `a` in your code does not give you any valuable information on the variable, you will certainly find yourself in the need to jump to the declaration. Next, the name `e_age` is also quite inconclusive, because you might know it represents some age, but you cannot be sure what `e` stands for. `emage` is even worse, because it does not separate the words in any way, and also one could think this is a typo for `image`. Lastly, you do not (I emphasize: **DO NOT!!!**) need to include the type into any method or variable names, as your IDE should be able resolve them in real-time.
-    
+    Reading `a` in your code does not give you any valuable information on the variable, you will certainly find yourself in the need to jump to the declaration. Next, the name `e_age` is also quite inconclusive, because you might know it represents some age, but you cannot be sure what `e` stands for. `emage` is even worse, because it does not separate the words in any way, and also one could think this is a typo for `image`. Lastly, you do not (I emphasize: **DO NOT!!!**) need to include the type into any method or variable names, as your IDE should be able resolve them in real-time.      
     <sub>**Side note:** In this example we used underscore name separation (which is standard practice in python), but of course feel free to use the accepted naming practice in your language, like, for example, [camelCase](https://sanaulla.info/2008/06/25/camelcase-notation-naming-convention-for-programming-languages/) in Java.</sub>
     
     Choosing precise and meaningful names allows us, among other things, to omit writing comments and documentation (at least project-intern), because the name indicates the function. For the same reason, developers will be forced less often to jump to the declaration.  
@@ -265,8 +260,7 @@ In large our coding guidelines are derived from the book _Clean Code: A Handbook
             public_api_method(param_1, param_2 ...){
               ...
             }
-        ```
-     
+        ```  
       <sub>**Side note:** This example uses the [numpy-docstring standard](https://numpydoc.readthedocs.io/en/latest/format.html#method-docstrings).</sub>
      
     - Short in-line comments, which are preferred, because they do not clutter the code as much:
@@ -366,8 +360,7 @@ In large our coding guidelines are derived from the book _Clean Code: A Handbook
     
     Next, we would like to encourage the wrapping of external modules or libraries; even standard libraries, as these are not exempt to change either. The consequence is that all our business code will consist of code written internally by us, and external sources just become kind of plugins. This drastically reduces possible points of failure and eases maintainability. Imagine coming in need to switch some library. If it was not wrapped before, you have to refactor all the occurrences in the code. On the other hand, if you used a wrapper, you just change the occurrences in the wrapper class and make them work with the existing unit-tests. The code will work the same before and afterwards, and you did not need to change any other code.
     
-    Often people associate these measures with object-oriented programming, but these can honestly be applied to any kind of programming, be it functional, data oriented, etc.
-    
+    Often people associate these measures with object-oriented programming, but these can honestly be applied to any kind of programming, be it functional, data oriented, etc.      
     <sub>**Side note:** If you wanna read more on encapsulation and the reasoning behind single responsibility components, refer to _Clean Code: A Handbook of Agile Software Craftsmanship_ by Uncle Rob, or [this blog article by him](https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html).</sub>
     
     One last thing you should keep in mind, is to avoid so called _side effects_. When your method is called `get_total_number_of_employees()`, I expect it to only do as it says and not to also do something else. Let us say, the method would also send the retrieved number to some database. In that case it should be called something in the likes of `get_total_number_of_employees_and_send_to_db()`.
